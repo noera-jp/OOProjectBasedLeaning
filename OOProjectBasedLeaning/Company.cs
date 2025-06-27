@@ -157,7 +157,19 @@ namespace OOProjectBasedLeaning
         public void ClockIn(Employee employee)
         {
 
-            timeTracker.PunchIn(FindEmployeeById(employee.Id).Id);
+            if (timeTracker.IsClockInMode())
+            {
+
+                timeTracker.PunchIn(FindEmployeeById(employee.Id).Id);
+
+            }
+            else
+            {
+
+                throw new InvalidOperationException("「出勤」モードに切り替えてください。");
+
+            }
+
 
         }
 

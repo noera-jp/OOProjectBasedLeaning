@@ -10,6 +10,7 @@ namespace OOProjectBasedLeaning
 
     public interface TimeTracker
     {
+        void ChangeClockInMode();
 
         /// <summary>
         /// 出勤の時間を記録する。
@@ -25,6 +26,8 @@ namespace OOProjectBasedLeaning
         /// <exception cref="InvalidOperationException">従業員が仕事中でない場合</exception>""
         void PunchOut(int employeeId);
 
+        bool IsClockInMode();
+
         /// <summary>
         /// 仕事中かどうかを判定する。
         /// </summary>
@@ -34,7 +37,7 @@ namespace OOProjectBasedLeaning
 
     }
 
-    public class TimeTrackerModel : TimeTracker
+    public class TimeTrackerModel : NotifierModelEntity, TimeTracker
     {
 
         /// <summary>
@@ -57,7 +60,8 @@ namespace OOProjectBasedLeaning
         /// </summary>
         /// <remarks>The mode determines the behavior of the system, such as whether it operates in "Punch
         /// In" mode or other modes.</remarks>
-        private Mode mode = Mode.PunchIn;
+        //private Mode mode = Mode.PunchIn;
+        private TimeRecordMode mode = TimeRecordMode.ClockIn;
 
         private enum Mode
         {
@@ -69,6 +73,16 @@ namespace OOProjectBasedLeaning
         {
 
             this.company = company.AddTimeTracker(this);
+
+        }
+
+        public void ChangeClockInMode()
+        {
+
+            mode = TimeRecordMode.ClockIn;
+
+            // Notify observers that the mode has changed
+            Notify();
 
         }
 
@@ -117,6 +131,13 @@ namespace OOProjectBasedLeaning
 
         }
 
+        public bool IsClockInMode()
+        {
+
+            return mode is TimeRecordMode.ClockIn;
+
+        }
+
         public bool IsAtWork(int employeeId)
         {
 
@@ -139,6 +160,11 @@ namespace OOProjectBasedLeaning
 
         public static TimeTracker Instance { get { return instance; } }
 
+        public void ChangeClockInMode()
+        {
+
+        }
+
         public void PunchIn(int employeeId)
         {
 
@@ -149,6 +175,12 @@ namespace OOProjectBasedLeaning
 
         }
 
+        public bool IsClockInMode()
+        {
+
+            return false;
+
+        }
         public bool IsAtWork(int employeeId)
         {
 
