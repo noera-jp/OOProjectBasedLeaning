@@ -177,7 +177,18 @@ namespace OOProjectBasedLeaning
            
         {
 
-            timeTracker.PunchOut(FindEmployeeById(employee.Id).Id);
+            if (timeTracker.IsClockOutMode())
+            {
+
+                timeTracker.PunchOut(FindEmployeeById(employee.Id).Id);
+
+            }
+            else
+            {
+
+                throw new InvalidOperationException("「退勤」モードに切り替えてください。");
+
+            }
 
         }
 

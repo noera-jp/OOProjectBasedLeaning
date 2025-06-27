@@ -27,6 +27,7 @@ namespace OOProjectBasedLeaning
         void PunchOut(int employeeId);
 
         bool IsClockInMode();
+        bool IsClockOutMode();
 
         /// <summary>
         /// 仕事中かどうかを判定する。
@@ -86,6 +87,16 @@ namespace OOProjectBasedLeaning
 
         }
 
+        public void ChangeClockOutMode()
+        {
+
+            mode = TimeRecordMode.ClockOut;
+
+            // Notify observers that the mode has changed
+            Notify();
+
+        }
+
         public void PunchIn(int employeeId)
         {
 
@@ -137,6 +148,12 @@ namespace OOProjectBasedLeaning
             return mode is TimeRecordMode.ClockIn;
 
         }
+        public bool IsClockOutMode()
+        {
+
+            return mode is TimeRecordMode.ClockOut;
+
+        }
 
         public bool IsAtWork(int employeeId)
         {
@@ -176,6 +193,12 @@ namespace OOProjectBasedLeaning
         }
 
         public bool IsClockInMode()
+        {
+
+            return false;
+
+        }
+        public bool IsClockOutMode()
         {
 
             return false;
