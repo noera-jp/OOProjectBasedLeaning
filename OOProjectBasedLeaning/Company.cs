@@ -162,6 +162,7 @@ namespace OOProjectBasedLeaning
         }
 
         public void ClockOut(Employee employee)
+           
         {
 
             timeTracker.PunchOut(FindEmployeeById(employee.Id).Id);
@@ -242,6 +243,8 @@ namespace OOProjectBasedLeaning
             return false;
 
         }
+
+
 
     }
 

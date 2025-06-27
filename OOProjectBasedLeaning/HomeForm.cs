@@ -26,11 +26,11 @@ namespace OOProjectBasedLeaning
             {
 
                 (serializableObject as DragDropPanel).AddDragDropForm(this, PointToClient(new Point(dragEventArgs.X, dragEventArgs.Y)));
+                EmployeePanel employPanel = serializableObject as EmployeePanel;
+
 
             }
 
         }
-
     }
-
 }
