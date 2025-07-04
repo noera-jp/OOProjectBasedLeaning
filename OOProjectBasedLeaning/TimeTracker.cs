@@ -12,6 +12,8 @@ namespace OOProjectBasedLeaning
     {
         void ChangeClockInMode();
 
+        void ChangeClockOutMode();
+
         /// <summary>
         /// 出勤の時間を記録する。
         /// </summary>
@@ -182,6 +184,11 @@ namespace OOProjectBasedLeaning
 
         }
 
+        public void ChangeClockOutMode()
+        {
+
+        }
+
         public void PunchIn(int employeeId)
         {
 
@@ -210,6 +217,8 @@ namespace OOProjectBasedLeaning
             return false;
 
         }
+
+
 
     }
 
