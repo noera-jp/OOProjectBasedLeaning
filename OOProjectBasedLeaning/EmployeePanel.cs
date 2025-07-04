@@ -64,6 +64,10 @@ namespace OOProjectBasedLeaning
             employee.AddHome(home);
 
         }
+        public void AddCompany(Company company)
+        {
+            employee.AddCompany(company);
+        }
 
     }
 
