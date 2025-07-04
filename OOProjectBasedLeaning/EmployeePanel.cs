@@ -58,6 +58,13 @@ namespace OOProjectBasedLeaning
             }
         }
 
+        public void AddCompany(Company company)
+        {
+
+            employee.AddCompany(company);
+
+        }
+
     }
 
 }
