@@ -8,7 +8,7 @@ using System.Xml.Linq;
 namespace OOProjectBasedLeaning
 {
 
-    public interface Company : Model
+    public interface Company : Model, Place
     {
 
         /// <summary>
@@ -24,6 +24,8 @@ namespace OOProjectBasedLeaning
         /// <param name="id">従業員のID</param>
         /// <returns>従業員</returns>
         Employee FindEmployeeById(int id);
+
+        List<Employee> Employees();
 
         /// <summary>
         /// Adds a new employee to the company.
@@ -112,14 +114,24 @@ namespace OOProjectBasedLeaning
             return employees.GetValueOrDefault(id, NullEmployee.Instance);
 
         }
+        public List<Employee> Employees()
+        {
+
+            return employees.Values.ToList();
+
+        }
 
         public Company AddEmployee(Employee employee)
         {
 
-            employees.Add(employee.Id, employee);
+            if (!employees.ContainsKey(employee.Id))
+            {
+
+                employees.Add(employee.Id, employee);
+
+            }
 
             return this;
-
         }
 
         public Company RemoveEmployee(Employee employee)
@@ -205,6 +217,7 @@ namespace OOProjectBasedLeaning
     {
 
         private static Company instance = new NullCompany();
+        private static List<Employee> list = new List<Employee>(0);
 
         private NullCompany()
         {
@@ -233,6 +246,12 @@ namespace OOProjectBasedLeaning
         {
 
             return NullEmployee.Instance;
+
+        }
+        public List<Employee> Employees()
+        {
+
+            return list;
 
         }
 
