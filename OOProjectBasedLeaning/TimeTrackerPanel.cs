@@ -23,10 +23,10 @@ namespace OOProjectBasedLeaning
     
             private void InitializeComponent()
             {
-    
                 // Initialize UI components for the Time Tracker panel
                 // This could include buttons for PunchIn, PunchOut, and displaying status
-    
+                RecordModeTouchableLabel touchableLabel = new RecordModeTouchableLabel(timeTracker);
+                Controls.Add(touchableLabel);
             }
 
         // Methods to handle user interactions like PunchIn, PunchOut, etc.
