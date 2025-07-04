@@ -58,6 +58,13 @@ namespace OOProjectBasedLeaning
             }
         }
 
+        public void AddHome(Home home)
+        {
+
+            employee.AddHome(home);
+
+        }
+
     }
 
 }
