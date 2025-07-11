@@ -32,7 +32,7 @@ namespace OOProjectBasedLeaning
 
         protected override void OnFormDragDropSerializable(object? serializableObject, DragEventArgs dragEventArgs)
         {
-            if(serializableObject is DragDropForm)
+            if(serializableObject is DragDropPanel)
             {
                 (serializableObject as DragDropPanel).AddDragDropForm(this, PointToClient(new Point(dragEventArgs.X, dragEventArgs.Y)));
             }
