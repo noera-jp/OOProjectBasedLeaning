@@ -53,11 +53,11 @@ namespace OOProjectBasedLeaning
         /// <summary>
         /// <DateTime.Today, <Employee.Id, DateTime.Now>>
         /// </summary>
-        private Dictionary<DateTime, Dictionary<int, DateTime>> timestamp4PunchIn = new Dictionary<DateTime, Dictionary<int, DateTime>>();
+        private Dictionary<DateTime, List<Dictionary<int, DateTime>>> timestamp4PunchIn = new Dictionary<DateTime,List< Dictionary<int, DateTime>>>();
         /// <summary>
         /// <DateTime.Today, <Employee.Id, DateTime.Now>>
         /// </summary>
-        private Dictionary<DateTime, Dictionary<int, DateTime>> timestamp4PunchOut = new Dictionary<DateTime, Dictionary<int, DateTime>>();
+        private Dictionary<DateTime, List<Dictionary<int, DateTime>>> timestamp4PunchOut = new Dictionary<DateTime, List<Dictionary<int, DateTime>>>();
         /// <summary>
         /// Represents the current operational mode of the system.
         /// </summary>
@@ -110,13 +110,31 @@ namespace OOProjectBasedLeaning
 
             }
 
-            timestamp4PunchIn.Add(DateTime.Today, CreateTimestamp(employeeId));
+            DateTime today = DateTime.Today;
+
+            if (!timestamp4PunchIn.ContainsKey(today))
+            {
+
+                // 今日の出勤打刻がない場合は、新規に作成する
+                timestamp4PunchIn.Add(today, new List<Dictionary<int, DateTime>>());
+
+            }
+
+            if (AcquirePunchedInTimestamp(today, employeeId) is NullTimestamp)
+            {
+
+                // 今日の出勤打刻に従業員の打刻を追加する
+                timestamp4PunchIn[today].Add(CreateTimestamp(employeeId));
+
+            }
+
+            // Notify observers that the mode has changed
+            Notify();
 
         }
 
         public void PunchOut(int employeeId)
         {
-
             if (!IsAtWork(employeeId))
             {
 
@@ -125,8 +143,26 @@ namespace OOProjectBasedLeaning
 
             }
 
-            timestamp4PunchOut.Add(DateTime.Today, CreateTimestamp(employeeId));
+            DateTime today = DateTime.Today;
 
+            if (!timestamp4PunchOut.ContainsKey(today))
+            {
+
+                // 今日の退勤打刻がない場合は、新規に作成する
+                timestamp4PunchOut.Add(today, new List<Dictionary<int, DateTime>>());
+
+            }
+
+            if (AcquirePunchedOutTimestamp(today, employeeId) is NullTimestamp)
+            {
+
+                // 今日の退勤打刻に従業員の打刻を追加する
+                timestamp4PunchOut[today].Add(CreateTimestamp(employeeId));
+
+            }
+
+            // Notify observers that the mode has changed
+            Notify();
         }
 
         /// <summary>
@@ -160,8 +196,74 @@ namespace OOProjectBasedLeaning
         public bool IsAtWork(int employeeId)
         {
 
-            return timestamp4PunchIn[DateTime.Today].ContainsKey(employeeId)
-                && !timestamp4PunchOut[DateTime.Today].ContainsKey(employeeId);
+            DateTime today = DateTime.Today;
+
+            return AcquirePunchedInTimestamp(today, employeeId) is not NullTimestamp
+                && AcquirePunchedOutTimestamp(today, employeeId) is NullTimestamp;
+
+        }
+        private Dictionary<int, DateTime> AcquirePunchedInTimestamp(DateTime today, int employeeId)
+        {
+
+            if (timestamp4PunchIn.ContainsKey(today))
+            {
+
+                return AcquirePunchedTimestamp(timestamp4PunchIn[today], employeeId);
+
+            }
+
+            // 従業員の打刻がない場合は、NullTimestamp.Instance の打刻を返す
+            return NullTimestamp.Instance;
+
+        }
+
+        private Dictionary<int, DateTime> AcquirePunchedOutTimestamp(DateTime today, int employeeId)
+        {
+
+            if (timestamp4PunchOut.ContainsKey(today))
+            {
+
+                return AcquirePunchedTimestamp(timestamp4PunchOut[today], employeeId);
+
+            }
+
+            // 従業員の打刻がない場合は、NullTimestamp.Instance の打刻を返す
+            return NullTimestamp.Instance;
+
+        }
+
+        private Dictionary<int, DateTime> AcquirePunchedTimestamp(List<Dictionary<int, DateTime>> list, int employeeId)
+        {
+
+            foreach (Dictionary<int, DateTime> timestamp in list)
+            {
+
+                if (timestamp.ContainsKey(employeeId))
+                {
+
+                    return timestamp;
+
+                }
+
+            }
+
+            // 従業員の打刻がない場合は、NullTimestamp.Instance の打刻を返す
+            return NullTimestamp.Instance;
+
+        }
+        private class NullTimestamp : Dictionary<int, DateTime>, NullObject
+        {
+
+            private static Dictionary<int, DateTime> instance = new NullTimestamp();
+
+            private NullTimestamp() : base(1)
+            {
+
+                Add(NullEmployee.Instance.Id, DateTime.MinValue);
+
+            }
+
+            public static Dictionary<int, DateTime> Instance { get { return instance; } }
 
         }
 
