@@ -11,7 +11,15 @@ namespace OOProjectBasedLeaning
     public class EmployeePanel : DragDropPanel
     {
 
-        private Employee employee;
+        private Employee employee = NullEmployee.Instance;
+        private EmployeeNameTextBox employeeNameTextBox = NullEmployeeNameTextBox.Instance;
+
+        public EmployeePanel()
+        {
+
+            InitializeComponent();
+
+        }
 
         public EmployeePanel(Employee employee)
         {

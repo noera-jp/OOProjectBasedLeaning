@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace OOProjectBasedLeaning
 {
-    public class EmployeeTextBox : TextBox
+    public class EmployeeNameTextBox : TextBox
     {
         private Employee employee = NullEmployee.Instance;
 
-        public EmployeeTextBox(Employee employee)
+        public EmployeeNameTextBox(Employee employee)
         {
             this.employee = employee;
 
@@ -29,15 +29,15 @@ namespace OOProjectBasedLeaning
         }
     }
 
-    public class NullEmployeeNameTextBox : EmployeeTextBox
+    public class NullEmployeeNameTextBox : EmployeeNameTextBox
     {
-        private static readonly EmployeeTextBox instance = new NullEmployeeNameTextBox();
+        private static readonly EmployeeNameTextBox instance = new NullEmployeeNameTextBox();
 
         private NullEmployeeNameTextBox() : base(NullEmployee.Instance)
         {
             //this constructor is used for the null object pattem
         }
-        public static EmployeeTextBox Instance { get { return instance; } }
+        public static EmployeeNameTextBox Instance { get { return instance; } }
 
         public override string Text
         {
