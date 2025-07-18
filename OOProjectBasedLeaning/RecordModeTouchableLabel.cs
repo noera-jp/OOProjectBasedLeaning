@@ -85,7 +85,7 @@ namespace OOProjectBasedLeaning
         public void ChangeClockOutMode()
         {
 
-          
+            timeTracker.ChangeClockOutMode();
 
         }
 
