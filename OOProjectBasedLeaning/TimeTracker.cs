@@ -202,6 +202,13 @@ namespace OOProjectBasedLeaning
                 && AcquirePunchedOutTimestamp(today, employeeId) is NullTimestamp;
 
         }
+
+        /// <summary>
+        /// 指定された日付と従業員IDに基づいて、打刻された出勤時間を取得します。
+        /// </summary>
+        /// <param name="today">日付</param>
+        /// <param name="employeeId">従業員ID</param>
+        /// <returns>打刻された出勤時間 ※取得できなかった場合 NullTimestamp</returns>
         private Dictionary<int, DateTime> AcquirePunchedInTimestamp(DateTime today, int employeeId)
         {
 
@@ -217,6 +224,12 @@ namespace OOProjectBasedLeaning
 
         }
 
+        /// <summary>
+        /// 指定された日付と従業員IDに基づいて、打刻された退勤時間を取得します。
+        /// </summary>
+        /// <param name="today">日付</param>
+        /// <param name="employeeId">従業員ID</param>
+        /// <returns>打刻された退勤時間 ※取得できなかった場合 NullTimestamp</returns>
         private Dictionary<int, DateTime> AcquirePunchedOutTimestamp(DateTime today, int employeeId)
         {
 
@@ -232,6 +245,12 @@ namespace OOProjectBasedLeaning
 
         }
 
+        /// <summary>
+        /// 指定された日付と従業員IDに基づいて、打刻された時間を取得します。
+        /// </summary>
+        /// <param name="today">日付</param>
+        /// <param name="employeeId">従業員ID</param>
+        /// <returns>打刻された時間 ※取得できなかった場合 NullTimestamp</returns>
         private Dictionary<int, DateTime> AcquirePunchedTimestamp(List<Dictionary<int, DateTime>> list, int employeeId)
         {
 
